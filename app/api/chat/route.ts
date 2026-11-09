@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         role,
         content: String(item?.content ?? "").slice(0, 8000)
       } as const;
-    }).filter(message => message.content.trim().length > 0);
+    }).filter((message: { role: string; content: string }) => message.content.trim().length > 0);
 
     if (!safeMessages.length || safeMessages[safeMessages.length - 1].role !== "user") {
       return NextResponse.json({ error: "Send a new message to continue." }, { status: 400 });
